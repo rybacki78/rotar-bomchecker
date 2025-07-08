@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Exact BOM Checker App</title>
+</head>
+
+<body>
+    <h1>BOM Tree for "{{ selected }}"</h1>
+
+    <h2>Levels:</h2>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Cost Center</th>
+            <th>Violation</th>
+        </tr>
+        {% for item, lvl, c_center, violation in traverse_result %}
+        <tr>
+            <td>level {{ lvl }} - {{ item }}</td>
+            <td>{{ c_center }}</td>
+            <td>{{ violation }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/">🔙 Back</a>
+</body>
+
+</html>

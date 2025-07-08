@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Exact BOM Checker App</title>
+</head>
+
+<body>
+    <h1>Exact BOM Checker App</h1>
+    <div class="row">
+        <div class="column">
+            <form method="POST">
+                <label for="root">Select Root Item:</label>
+                <select name="root" id="root">
+                    {% for r in roots %}
+                    <option value="{{ r }}">{{ r }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Check BOM</button>
+            </form>
+        </div>
+        <div class="column">
+            <form method="POST">
+                <button name="refresh" value="1">🔄 Refresh from SQL Server</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
