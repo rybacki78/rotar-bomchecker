@@ -7,11 +7,8 @@ body {
   margin: 0;
 }
 
-input {
-  font-size: medium;
-  background-color: #d0d0d0;
-  color: #4a4a49;
-  border: none;
+html {
+  scrollbar-color: #d0d0d0 #4a4a49;
 }
 
 .navbar {
@@ -93,7 +90,11 @@ input {
 .bom-tree {
   margin-top: 10px;
   margin-left: 10px;
+  margin-right: 10px;
   flex: 50%;
+  max-height: 80vh;
+  overflow-y: auto;
+  font-size: medium;
 }
 
 .issues-view {
@@ -116,10 +117,66 @@ input {
 .select-column {
   margin-top: 10px;
   margin-left: 10px;
-  flex: 50%;
+  flex: 40%;
 }
 
+.select-column input {
+  font-size: medium;
+  background-color: #d0d0d0;
+  color: #4a4a49;
+  border: none;
+}
 .warnings-column {
   margin-top: 10px;
-  flex: 50%;
+  flex: 60%;
+}
+
+.issues-container {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.issue-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  padding: 12px;
+  margin-bottom: 3px;
+  border-radius: 5px;
+  border: none;
+  width: 60%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: medium;
+}
+
+.issue-item:hover {
+  background-color: #192746;
+  transform: translateX(2px);
+}
+
+.issue-item * {
+  background-color: transparent;
+}
+
+.issue-item:focus {
+  outline: none;
+}
+
+.bottom-bar {
+  overflow: hidden;
+  background-color: #192746;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: right;
+  font-size: small;  
+}
+
+
+.bottom-bar span {
+  background-color: #192746;
+  margin-right: 20px;
 }

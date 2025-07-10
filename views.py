@@ -3,6 +3,8 @@ from flask import Blueprint, request, redirect, url_for, render_template
 
 views = Blueprint(__name__, "views")
 
+VERSION = 0.1
+
 
 @views.route("/", methods=["GET", "POST"])
 def index():
@@ -40,5 +42,8 @@ def index():
             traverse_result=traverse_result,
             violations_count=violations_count,
             max_levels=max_levels,
+            version=VERSION,
         )
-    return render_template("index.html", roots=roots, problematic_boms=problematic_boms)
+    return render_template(
+        "index.html", roots=roots, problematic_boms=problematic_boms, version=VERSION
+    )

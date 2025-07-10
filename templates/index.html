@@ -30,7 +30,7 @@
     <div class="main">
       <div class="row">
         <div class="select-column">
-          <h2>Select the root item to start analysis:</h2>
+          <h2>Select the root item to start analysis....</h2>
           <form method="POST" autocomplete="off">
             <input
               type="text"
@@ -51,25 +51,44 @@
           </form>
         </div>
         <div class="warnings-column">
-          <h2>List of all root items with issues:</h2>
-          {% for bom in problematic_boms %}
-          <div>
-            {{ bom.root_item }}, {% if bom.max_level > 7 %}
-            <span class="warn"> levels: {{ bom.max_level }}, </span>
-            {% else %}
-            <span class="good"> levels: {{ bom.max_level }}, </span>
-            {% endif %} {% if bom.violations != 7 %}
-            <span class="warn"> violations: {{ bom.violations }}, </span>
-            {% else %}
-            <span class="good"> violations: {{ bom.violations }}, </span>
-            {% endif %}
-          </div>
+          <h2>
+            ... Or choose one from list of wrong BOMs ({{
+            problematic_boms|length }} found)
+          </h2>
+          <div class="issues-container">
+            {% for bom in problematic_boms %}
+            <form method="POST" style="margin: 0">
+              <input type="hidden" name="root" value="{{ bom.root_item }}" />
+              <button type="submit" class="issue-item">
+                <span>{{ bom.root_item }}</span>
+                <div class="issue-details">
+                  <div class="issue-metric">
+                    <span>levels:</span>
+                    <span
+                      class="{% if bom.max_level > 7 %}warn{% else %}good{% endif %}"
+                    >
+                      {{ bom.max_level }}
+                    </span>
 
-          {% endfor %}
+                    <span>cc violations:</span>
+                    <span
+                      class="{% if bom.violations != 0 %}warn{% else %}good{% endif %}"
+                    >
+                      {{ bom.violations }}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </form>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>
     {% endblock %}
+    <div class="bottom-bar">
+        <span>version: {{ version }}</span>
+    </div>
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='js/index.js')}}"
