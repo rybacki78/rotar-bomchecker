@@ -1,30 +1,12 @@
-from backend import *
-from flask import Flask, render_template, request, redirect, url_for
-
-# from waitress import serve
+from flask import Flask
+from views import views
 
 app = Flask(__name__)
-
-
-@app.route("/", methods=["GET", "POST"])
-def index():
-    boms = fetch_boms()
-    roots = root_items(boms)
-
-    if request.method == "POST":
-        if "refresh" in request.form:
-            fetch_boms_from_server()
-            return redirect(url_for("index"))
-        selected = request.form["root"]
-        traverse_result = traverse_bom(selected, boms)
-        return render_template(
-            "result.html", selected=selected, traverse_result=traverse_result
-        )
-    return render_template("index.html", roots=roots)
+app.register_blueprint(views, url_prefix="/")
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=9980)
 
     # serve(app, host="0.0.0.0", port=9980)
 

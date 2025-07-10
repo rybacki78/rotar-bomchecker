@@ -1,32 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "index.html" %} {% block content %}
+<div class="navbar">
+  <a href="/">🏠 Home</a>
+  <img
+    class="navbar-logo"
+    src="{{ url_for('static', filename='images/Logo-Rotar-lichtgrijs.png') }}"
+  />
+</div>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Exact BOM Checker App</title>
-</head>
-
-<body>
-    <h1>BOM Tree for "{{ selected }}"</h1>
-
-    <h2>Levels:</h2>
-    <table>
-        <tr>
-            <th>Item</th>
-            <th>Cost Center</th>
-            <th>Violation</th>
-        </tr>
-        {% for item, lvl, c_center, violation in traverse_result %}
-        <tr>
-            <td>level {{ lvl }} - {{ item }}</td>
-            <td>{{ c_center }}</td>
-            <td>{{ violation }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <a href="/">🔙 Back</a>
-</body>
-
-</html>
+<div class="main">
+  <h2>{{ selected }}</h2>
+  <div class="row">
+    <div class="bom-tree">
+      <h3>BOM Tree:</h3>
+      {% for item, lvl, c_center, violation in traverse_result %}
+      <div class="bom-item">
+        {% if lvl > 7 %}
+        <span style="padding-left: {{ lvl * 34 }}px;"
+          ><span style="color: #666666">├──</span
+          ><span class="warn"> lvl. {{ lvl }}</span> - {{ item }}</span
+        >
+        {% else %}
+        <span style="padding-left: {{ lvl * 34 }}px;"
+          ><span style="color: #666666">├──</span> lvl. {{ lvl }} - {{ item
+          }}</span
+        >
+        {% endif %} {% if violation == "" %} {% if c_center != None %}
+        <span class="good">cc: {{ c_center }}</span>
+        {% endif %} {% else %}
+        <span class="warn">violation: cc: {{ c_center }} {{ violation }}</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="issues-view">
+      <h3>Warnings:</h3>
+      {% if violations_count == 0 and max_levels <= 7 %}
+      <span class="good">There are no issues. 😊</span>
+      {% endif %} {% if violations_count !=0 %}
+      <span class="warn"
+        >There are {{ violations_count }} cost center violation(s)!</span
+      ><br />
+      {% endif %} {% if max_levels >= 8 %}
+      <span class="warn">There are {{ max_levels }} levels!</span><br />
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

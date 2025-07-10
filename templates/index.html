@@ -1,32 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <title>Exact BOM Checker App</title>
-</head>
+  </head>
 
-<body>
-    <h1>Exact BOM Checker App</h1>
-    <div class="row">
-        <div class="column">
-            <form method="POST">
-                <label for="root">Select Root Item:</label>
-                <select name="root" id="root">
-                    {% for r in roots %}
-                    <option value="{{ r }}">{{ r }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Check BOM</button>
-            </form>
-        </div>
-        <div class="column">
-            <form method="POST">
-                <button name="refresh" value="1">🔄 Refresh from SQL Server</button>
-            </form>
-        </div>
+  <body>
+    {% block content %}
+    <div class="navbar">
+      <a href="/">🏠 Home</a>
+      <img
+        class="navbar-logo"
+        src="{{ url_for('static', filename='images/Logo-Rotar-lichtgrijs.png') }}"
+      />
+      <form method="POST">
+        <button name="refresh" value="1">🔄 Refresh from SQL Server</button>
+      </form>
     </div>
-</body>
+    <div class="main">
+      <div class="row">
+        <div class="select-column">
+          <h2>Select the root item to start analysis:</h2>
+          <form method="POST" autocomplete="off">
+            <input
+              type="text"
+              name="root"
+              id="root"
+              placeholder="Type to search root items..."
+              onkeyup="filterFunction()"
+              onfocus="showDropdown()"
+              onblur="hideDropdown()"
+            />
+            <div id="dropdown-list" class="dropdown-list">
+              {% for r in roots %}
+              <div class="dropdown-item" onclick="selectRoot('{{ r }}')">
+                {{ r }}
+              </div>
+              {% endfor %}
+            </div>
+          </form>
+        </div>
+        <div class="warnings-column">
+          <h2>List of all root items with issues:</h2>
+          {% for bom in problematic_boms %}
+          <div>
+            {{ bom.root_item }}, {% if bom.max_level > 7 %}
+            <span class="warn"> levels: {{ bom.max_level }}, </span>
+            {% else %}
+            <span class="good"> levels: {{ bom.max_level }}, </span>
+            {% endif %} {% if bom.violations != 7 %}
+            <span class="warn"> violations: {{ bom.violations }}, </span>
+            {% else %}
+            <span class="good"> violations: {{ bom.violations }}, </span>
+            {% endif %}
+          </div>
 
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/index.js')}}"
+    ></script>
+  </body>
 </html>
