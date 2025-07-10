@@ -5,8 +5,8 @@ FROM python:3.12
 RUN curl -sSL -O https://packages.microsoft.com/config/debian/$(grep VERSION_ID /etc/os-release | cut -d '"' -f 2 | cut -d '.' -f 1)/packages-microsoft-prod.deb
 RUN dpkg -i packages-microsoft-prod.deb
 RUN rm packages-microsoft-prod.deb
-RUN sudo apt-get update
-RUN sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
+RUN apt-get update
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql18
 
 
 WORKDIR /app
