@@ -28,32 +28,7 @@ def save_it_data_to_cache(it_data):
 
 def fetch_boms_from_server():
     conn = sql_server_conn()
-    query = """WITH cleaned_recipe AS (SELECT TRIM(itemprod)                             AS item_prod,
-                                              TRIM(itemreq)                              AS item_required,
-                                              TRIM(costcenter)                           AS cost_center,
-                                              operation,
-                                              CAST(REPLACE(quantity, ',', '.') AS FLOAT) AS quant
-                                       FROM recipe
-               with (nolock)
-               WHERE version = 1
-                   )
-    SELECT item_prod,
-           cost_center,
-           CASE
-               WHEN item_required LIKE '%_LH' OR item_required LIKE '%_MH'
-                   THEN operation
-               ELSE item_required
-               END    AS item_req,
-           SUM(quant) AS quantity
-    FROM cleaned_recipe with (nolock)
-    GROUP BY
-        item_prod,
-        cost_center,
-        CASE
-        WHEN item_required LIKE '%_LH' OR item_required LIKE '%_MH'
-        THEN operation
-        ELSE item_required
-    END;"""
+    query = """SELECT * FROM CSPRY_BOMsummary;"""
     df = pd.read_sql(query, conn)
     save_boms_to_cache(df)
     return df
