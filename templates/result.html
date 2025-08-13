@@ -15,12 +15,12 @@
       {% for item, lvl, c_center, violation in traverse_result %}
       <div class="bom-item">
         {% if lvl > 7 %}
-        <span style="padding-left: {{ lvl * 34 }}px;"
+        <span style="padding-left: {{ lvl * 34 }}px"
           ><span style="color: #666666">├──</span
           ><span class="warn"> lvl. {{ lvl }}</span> - {{ item }}</span
         >
         {% else %}
-        <span style="padding-left: {{ lvl * 34 }}px;"
+        <span style="padding-left: {{ lvl * 34 }}px"
           ><span style="color: #666666">├──</span> lvl. {{ lvl }} - {{ item
           }}</span
         >

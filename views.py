@@ -1,9 +1,10 @@
 from backend import *
 from flask import Blueprint, request, redirect, url_for, render_template
+from version import VERSION
 
 views = Blueprint(__name__, "views")
 
-VERSION = 0.1
+
 
 
 @views.route("/", methods=["GET", "POST"])

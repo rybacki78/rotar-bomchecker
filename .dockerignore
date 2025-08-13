@@ -1,9 +1,23 @@
-.env
-cache.db
+# Python
 __pycache__/
 *.pyc
+.venv
 
+# VS Code settings
+.vscode/
+
+# Environment files
+.env
+
+# Logs
 logs/
 *.log
-.venv
+
+# Database/cache
+cache.db
+
+# Git
 .git
+
+# Build scripts
+build.sh

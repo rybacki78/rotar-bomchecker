@@ -1,21 +1,23 @@
-.venv/
-
-*.pyc
+# Python
 __pycache__/
+*.pyc
+.venv
 
-instance/
+# VS Code settings
+.vscode/
 
-.pytest_cache/
-.coverage
-htmlcov/
-
-dist/
-build/
-*.egg-info/
-
-cache.db
-
+# Environment files
 .env
 
+# Logs
 logs/
 *.log
+
+# Database/cache
+cache.db
+
+# Git
+.git
+
+# Build scripts
+build.sh

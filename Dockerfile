@@ -1,7 +1,7 @@
-# app1/Dockerfile
-FROM python:3.12
+FROM python:3.12-slim
 
 # Install SQL Server dependencies
+RUN apt-get update && apt-get install -y curl
 RUN curl -sSL -O https://packages.microsoft.com/config/debian/$(grep VERSION_ID /etc/os-release | cut -d '"' -f 2 | cut -d '.' -f 1)/packages-microsoft-prod.deb
 RUN dpkg -i packages-microsoft-prod.deb
 RUN rm packages-microsoft-prod.deb
@@ -15,5 +15,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Environment variables will be injected at runtime
 CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
