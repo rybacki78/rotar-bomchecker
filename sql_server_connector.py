@@ -6,9 +6,9 @@ load_dotenv()
 
 
 def sql_server_conn():
-    driver = os.getenv("SQL_DRIVER")
+    driver = os.getenv("SQL_DRIVER", "ODBC+Driver+18+for+SQL+Server")
     server = os.getenv("SQL_SERVER")
-    port = os.getenv("SQL_PORT")
+    port = os.getenv("SQL_PORT", "1433")
     database = os.getenv("SQL_DATABASE")
     username = os.getenv("SQL_USER")
     password = os.getenv("SQL_PASSWORD")
